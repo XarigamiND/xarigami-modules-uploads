@@ -1,0 +1,80 @@
+<xar:base-include-javascript filename="switchImport.js" module="uploads"/>
+<xar:style scope="module" module="uploads" file="uploads" />
+
+<div class="xar-form-container-after">
+    <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
+    <xar:if condition="!empty($invalid)">
+        <p class="xar-error">#$invalid#</p>
+    </xar:if>
+
+    <xar:if condition="$methods['upload'] eq TRUE">
+        <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;"
+           name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring></a> |
+    </xar:if>
+
+    <xar:if condition="$methods['stored'] eq TRUE AND (isset($storedList) AND count($storedList))">
+        <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(4, #$getAction['STORED']#, '#$id#');true;"
+           name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring></a> |
+    </xar:if>
+
+    <xar:if condition="$methods['trusted'] eq TRUE">
+        <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;"
+           name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring></a> |
+    </xar:if>
+
+    <xar:if condition="$methods['external'] eq TRUE">
+        <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;"
+           name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring></a> |
+    </xar:if>
+
+    <span class="xar-accent">
+         &#160;
+        <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(5, -1, '#$id#');true;"
+           name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring></a> |
+
+        <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(6, -2, '#$id#');true;"
+           name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#"><xar:mlstring>Clear</xar:mlstring></label>
+    </span>
+    <xar:if condition="isset($display) and !empty($src)">
+        <div class="uploadimage">
+            <xar:set name="width">isset($width) ? $width: 80;</xar:set>
+            <img src="#$src#" title="#xarML('uploaded file')#" alt="#xarML('uploaded file')#" width="#$width#" />
+        </div>
+    </xar:if>
+    <br />
+    <div id="#$id#_attach_trusted" style="display: none;">
+        <xar:template file="attach_trusted" type="module" />
+    </div>
+
+    <div id="#$id#_attach_external" style="display: none;">
+        <xar:template file="attach_external" type="module" />
+    </div>
+
+    <div id="#$id#_attach_upload" style="display: none;">
+        <xar:template file="attach_upload" type="module" />
+    </div>
+
+    <div id="#$id#_attach_stored" style="display: none;">
+        <xar:template file="attach_stored" type="module" />
+    </div>
+    <xar:if condition="isset($extensions) and !empty($extensions)">
+    <br />
+     <xar:ml>
+        <xar:mlstring>Allowed file types: #(1)</xar:mlstring>
+        <xar:mlvar>#$extensions#</xar:mlvar>
+    </xar:ml>
+    </xar:if>
+    <xar:if condition="!empty($filemax)">
+    <br />
+
+     <xar:ml>
+        <xar:mlstring>Maximum file size: #(1)</xar:mlstring>
+        <xar:mlvar>#$filemax#</xar:mlvar>
+    </xar:ml>
+    <xar:if condition="xarSecurityCheck('AdminUploads',0) and !empty($phpmaxerror)">
+    <br />    <span class="xar-error">#$phpmaxerror#</span>
+    </xar:if>
+    </xar:if>
+    <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
+
+</div>

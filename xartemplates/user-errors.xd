@@ -1,0 +1,56 @@
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="user-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>User Error</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <fieldset>
+                <img src="#xarTplGetImage('user-error.png','base')#" alt="#xarML('System Message')#" width="96" height="96" class="xar-module-icon"/>
+                <xar:if condition="!isset($errortype)">
+                    <div class="xar-padding-thick">
+                        <xar:mlstring>No error message is available. </xar:mlstring>
+                    <br />
+                        <xar:mlstring>Please contact the system administrator.</xar:mlstring>
+                    </div>
+                <xar:elseif condition="$errortype eq 'invalid_directory'" />
+                    <div class="xar-padding-thick">
+                        <p>
+                            #$var1#
+                        </p>
+                    </div>
+                <xar:elseif condition="$errortype eq 'not_supported'" />
+                    <div class="xar-padding-thick">
+                        <p>
+                            <xar:ml>
+                            <xar:mlstring>Import via scheme '#(1)' is not currently supported</xar:mlstring>
+                            <xar:mlvar>#$var1#</xar:mlvar>
+                            </xar:ml>
+                        </p>
+                    </div>
+                <xar:elseif condition="$errortype eq 'temp_file'" />
+                    <div class="xar-padding-thick">
+                        <p>
+                            #$var1#
+                        </p>
+                    </div>
+                <xar:elseif condition="$errortype eq 'host_connect'" />
+                    <div class="xar-padding-thick">
+                        <p>
+                            #$var1#
+                        </p>
+                    </div>
+                <xar:else />
+                    <div class="xar-padding-thick">
+                        <xar:mlstring>No error message is available.</xar:mlstring>
+                        <br />
+                        <xar:mlstring>Please contact the system administrator.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </fieldset>
+        </div>
+    </div>
+</div>

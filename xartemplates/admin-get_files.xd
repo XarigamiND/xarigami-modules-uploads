@@ -1,0 +1,27 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Import Files</xar:mlstring></h1>
+        <div class="xar-mod-content">
+
+            <xar:if condition="isset($msg) and !empty($msg)">
+                <div class="xar-padding-thick xar-error">#$msg#</div>
+            </xar:if>
+
+            <xar:set name="$orientation">'horizontal'</xar:set>
+            <h2><xar:mlstring>Upload File</xar:mlstring></h2>
+            <xar:template file="upload-form" type="module" />
+
+            <h2><xar:mlstring>Import External File(s)</xar:mlstring></h2>
+            <xar:template file="external-import-form" type="module" />
+
+            <h2><xar:mlstring>Import Local File(s)</xar:mlstring></h2>
+            <xar:template file="local-import-form" type="module" />
+        </div>
+    </div>
+</div>

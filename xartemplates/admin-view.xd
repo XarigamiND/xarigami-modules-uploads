@@ -1,0 +1,155 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript filename="openDialog.js" />
+
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+         <h1><xar:mlstring>View and manage files</xar:mlstring></h1>
+        <div class="xar-mod-content">
+                <div class="xar-padding-thickends">
+                <xar:template file="filter_bar" type="module" />
+                </div>
+                <xar:if condition="isset($diskUsage)">
+                    <table summary="Filter Results" class="xar-items">
+                        <tr>
+                            <th align="center"><xar:mlstring>Physical Device Space</xar:mlstring></th>
+                            <th align="center"><xar:mlstring>Stored File Size Usage</xar:mlstring></th>
+                            <th align="center"><xar:mlstring>Number of Files</xar:mlstring></th>
+                        </tr>
+                        <tr>
+                            <td class="xar-norm xar-align-center"><xar:mlstring>Total / Used / Free</xar:mlstring></td>
+                            <td class="xar-norm xar-align-center"><xar:mlstring>current view / stored total</xar:mlstring></td>
+                            <td class="xar-norm xar-align-center"><xar:mlstring>current view / stored total</xar:mlstring></td>
+                        </tr>
+                        <tr>
+                            <td class="xar-norm xar-align-center">
+                                #$diskUsage['device_total']['short']# / #$diskUsage['device_used']['short']# / #$diskUsage['device_free']['short']#
+                            </td>
+                            <td class="xar-norm xar-align-center">
+                                #$diskUsage['stored_size_filtered']['short']# / #$diskUsage['stored_size_total']['short']#
+                            </td>
+                            <td class="xar-norm xar-align-center">
+                                #$diskUsage['numfiles_filtered']# / #$diskUsage['numfiles_total']#
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </xar:if>
+
+
+                <table summary="Files" class="xar-items xar-full-width">
+                  <tr>
+                            <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#" title="#xarML('Sort by filename')#"><xar:mlstring>File Name</xar:mlstring></a></th>
+                            <th>&nbsp;</th>
+                            <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#" title="#xarML('Sort by file size')#"><xar:mlstring>File Size</xar:mlstring></a></th>
+                            <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#" title="#xarML('Sort by date')#"><xar:mlstring>File Date</xar:mlstring></a></th>
+                            <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#" title="#xarML('Sort by user')#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
+                            <th colspan="2"><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#" title="#xarML('Sort by status')#"><xar:mlstring>Status</xar:mlstring></a></th>
+                  </tr>
+                  <xar:if condition="count($items)">
+                    <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
+                      <xar:loop name="$items">
+                        <xar:if condition="($loop:index % 2)">
+                            <xar:set name="tdclass">'xar-accent'</xar:set>
+                        <xar:else />
+                            <xar:set name="tdclass">'xar-norm'</xar:set>
+                        </xar:if>
+                        <tr>
+                            <td class="#$tdclass#">&nbsp;
+                                <a style="cursor: pointer;" onclick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                                    #$loop:item['fileName']#
+                                </a>
+                            </td>
+                            <td class="#$tdclass# xar-align-right">&#160;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
+                            <td class="#$tdclass# xar-align-right">#xarLocaleFormatNumber($loop:item['fileSize'])#</td>
+                            <xar:comment> TODO replace medium with shortdate </xar:comment>
+                            <td class="#$tdclass# xar-align-right"><xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
+                            <td class="#$tdclass# xar-align-center">#$loop:item['userName']#</td>
+                            <td class="#$tdclass#">
+                                <label for="fileId_#$loop:item['fileId']#">
+                                    &#160;#$loop:item['fileStatusName']#
+                                </label>
+                            </td>
+                            <td class="#$tdclass# xar-align-center">
+                                <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
+                            </td>
+                        </tr>
+                      </xar:loop>
+                        <xar:if condition="$pager ne ''">
+                        <tr>
+                            <td colspan="7" class="xar-norm xar-align-center" >
+                                #$pager#
+                            </td>
+                        </tr>
+                        </xar:if>
+                        <tr>
+                            <td colspan="7" >
+                                <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
+                                <tr>
+                                    <td>
+                                      <xar:mlstring>
+                                        Change SELECTED files to:
+                                      </xar:mlstring>
+                                      <span class="xar-nowrap">
+                                        <select name="action" id="action">
+                                            <xar:foreach in="$filters['status']" key="$key" value="$status">
+                                                <xar:if condition="$key eq '0'">
+                                                    <xar:comment> skip </xar:comment>
+                                                <xar:else />
+                                                    <option value="#$status['statusId']#">
+                                                        <xar:ml>
+                                                            <xar:mlstring>#(1) status</xar:mlstring>
+                                                            <xar:mlvar>#$status['statusName']#</xar:mlvar>
+                                                        </xar:ml>
+                                                    </option>
+                                                </xar:if>
+                                            </xar:foreach>
+                                        </select>
+                                        <input type="submit" name="fileDo" id="file_change" value="#xarML('Change')#"/>
+                                      </span>
+                                    </td>
+                                    <td class="xar-align-right">
+                                    <xar:base-include-javascript module="base" filename="checkall.js" />
+                                    <script language="JavaScript" type="text/javascript">
+                                        document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\" class=\"xar-nowrap\"><xar:mlstring>Select All</xar:mlstring></a> | ");
+                                        document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\" class=\"xar-nowrap\"><xar:mlstring>Unselect All</xar:mlstring></a> ]");
+                                    </script>
+                                    </td>
+                                </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </form>
+                    <xar:sec mask="DeleteUploads" catch="false">
+                      <tr>
+                        <td colspan="7" style="text-align:right;">
+                            <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                            <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                                <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+                                <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
+                            </form>
+                            <xar:else />
+                                &nbsp;
+                            </xar:if>
+                        </td>
+                      </tr>
+                    </xar:sec>
+                  <xar:else />
+                    <tr>
+                        <td class="xar-norm" colspan="7" align="center">
+                            <p>
+                                <xar:mlstring>
+                                    There are currently no files to view with the filter you have chosen.
+                                </xar:mlstring>
+                            </p>
+                        </td>
+                    </tr>
+                  </xar:if>
+                </table>
+        </div>
+    </div>
+</div>

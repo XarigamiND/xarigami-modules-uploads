@@ -1,0 +1,16 @@
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>>Uploads Module Overview</xar:mlstring></h1>
+        <div class="xar-mod-content">
+
+            <div align="center">
+                #$successmessage#
+            </div>
+        </div>
+    </div>
+</div>

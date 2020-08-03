@@ -1,0 +1,31 @@
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Overview</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <form action="#xarModURL('uploads','admin','approvefinal')#" method="post">
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Approval</xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="approval" class="xar-form-label">
+                            <xar:mlstring>Are you sure?</xar:mlstring>
+                        </label>
+                       <xar:set name="$MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>
+                    </div>
+                </fieldset>
+                <div class="xar-form-footer">
+                    <input type="hidden" name="authid" value="#$authid#"/>
+                    <input type="hidden" name="ulid" value="#$ulid#"/>
+                    <input type="hidden" name="ulhash" value="#$ulhash#"/>
+                    <input type="submit" value="#$MLApprove#"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

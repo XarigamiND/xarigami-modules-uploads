@@ -1,0 +1,39 @@
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Confirm deletion</xar:mlstring></h1>
+        <div class="xar-mod-content">
+
+            <table summary="Uploads" class="xar-items">
+                <tr>
+                    <th><xar:mlstring>Source Module</xar:mlstring></th>
+                    <th><xar:mlstring>Upload Code</xar:mlstring></th>
+                    <th><xar:mlstring>Mod Item ID</xar:mlstring></th>
+                    <th><xar:mlstring>Uploaded by</xar:mlstring></th>
+                    <th><xar:mlstring>User Given File Name</xar:mlstring></th>
+                    <th><xar:mlstring>Current File Name</xar:mlstring></th>
+                    <th><xar:mlstring>Actions</xar:mlstring></th>
+                </tr>
+                <xar:loop name="$items">
+                    <tr>
+                        <td class="xar-norm">#$loop:item['ulmod']#</td>
+                        <td class="xar-norm">#ulid:#$loop:item['ulid']##</td>
+                        <td class="xar-norm">#$loop:item['ulmodid']#</td>
+                        <td class="xar-norm">#$loop:item['uluid']#</td>
+                        <td class="xar-norm">#$loop:item['ulfile']#</td>
+                        <td class="xar-norm">#$loop:item['ulhash']#</td>
+                        <td class="xar-norm">
+                            <a href="#xarModURL('uploads', 'admin', 'confirmdelete', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#">
+                                <xar:mlstring>Confirm Delete</xar:mlstring>\
+                            </a>
+                        </td>
+                    </tr>
+                </xar:loop>
+            </table>
+        </div>
+    </div>
+</div>
