@@ -17,10 +17,10 @@
                 <xar:set name="style">!empty($output_width)? $style.'width:'.$output_width.$output_units.';':$style</xar:set>
                 <xar:set name="style">!empty($output_height)? $style.'height:'.$output_height.$output_units.';':$style</xar:set>
                 <xar:if condition="substr($filetype,0,5) eq 'image'">
-                    <img class="#$class#" src="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" style="#$style#"/>
+                    <img src="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" style="#$style#"/>
                 <xar:else/>
                 <div class="xar-uploads-icon">
-                    <a class="#$class#" href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                    <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
                             <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
                             #$loop:item['fileName']#
                     </a>
