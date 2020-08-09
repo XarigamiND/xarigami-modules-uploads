@@ -44,7 +44,7 @@ function &uploads_userapi_transformhook ( $args )
 function uploads_userapi_transform ( $body )
 {
     if (!is_string($body)) return; //jojo -we do not want to error here eg if a fileupload is now an upload in articles
-    while(preg_match('/#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#/i', $body, $matches)) {
+    while(preg_match('/#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinked|fileLinkedIcon):([^#]+)#/i', $body, $matches)) {
         $replacement=NULL;
         array_shift($matches);
         list($type, $id) = $matches;
@@ -66,6 +66,12 @@ function uploads_userapi_transform ( $body )
                 break;
             case 'ulfn': // ULFN is DEPRECATED
             case 'fileLinkedIcon':
+                $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
+                                             array('Attachments' => $list,
+                                                   'style' => 'icon'));
+                break;
+            case 'fileLinked':
                 $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
                 $replacement = xarTplModule('uploads', 'user', 'attachment-list',
                                              array('Attachments' => $list));
