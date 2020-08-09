@@ -88,6 +88,13 @@
                 </p>
                 <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
                 <p><xar:mlstring>There are no included blocks.</xar:mlstring></p>
+                <p>
+                    <xar:mlstring>The Uploads module does not provide any blocks on its own, but provides a display hook for waiting content block by going to </xar:mlstring>
+                         <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
+                     <xar:mlstring>From there check the radio buttons next to the base module.</xar:mlstring><br />
+                     <xar:mlstring>Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.</xar:mlstring>
+
+                </p>
                 <br />
 
                 <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
@@ -95,16 +102,22 @@
                     <xar:mlstring>The Uploads module does provide a transform hook. You can activate the uploads hook for a module or itemtype by going to </xar:mlstring>
                          <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
                      <xar:mlstring> From there check the radio buttons next to the modules and itemtypes where you wish to activate the uploads module hooks.</xar:mlstring><br />
+                </p>
+                <p>
+                     <xar:mlstring>You can write the following tags to content text to refer to uploaded files (the number refers to a file's ID):</xar:mlstring>
+                     <ul>
+                     <li><code>#file:1#</code>: <xar:mlstring>For images this will display the image, for files it displays a download icon</xar:mlstring>
+                     <li><code>#fileLinkedIcon:1#</code>: <xar:mlstring>Displays a download icon</xar:mlstring>
+                     <li><code>#fileLinked:1#</code>: <xar:mlstring>Displays the file name as a link to download it</xar:mlstring>
+                     <li><code>#fileIcon:1#</code>: <xar:mlstring>Displays the file's filetype icon URL</xar:mlstring>
+                     <li><code>#fileURL:1#</code>: <xar:mlstring>Displays the file's download URL</xar:mlstring>
+                     <li><code>#fileName:1#</code>: <xar:mlstring>Displays the file's name</xar:mlstring>
+                     </ul>
+                </p>
+                <p>
                      <xar:mlstring>If you combine the hook with the upload property, then you can add parameters to the dynamic property. Set the options with:</xar:mlstring>
                      <em>single;methods(-trusted,+external,+upload,+stored);basedir(/tothedir/uploads/{user});importdir(/tothedir/uploads/{user})</em><br />
                      <xar:mlstring>This option will allow for a single upload, with external, uploaded and stored files, but not trusted ones. The basedir to look for stored files is the user dir, and new files will be placed there as well.</xar:mlstring>
-
-                </p>
-                <p>
-                    <xar:mlstring>The Uploads module does also provide a display hook with waiting content waiting content hook by going to </xar:mlstring>
-                         <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
-                     <xar:mlstring>From there check the radio buttons next to the base module.</xar:mlstring><br />
-                     <xar:mlstring>Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.</xar:mlstring>
 
                 </p>
             <h3><xar:mlstring>Further Information</xar:mlstring></h3>
