@@ -121,12 +121,9 @@
 
                 </p>
             <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-            <p>
-                 <xar:mlstring>Further information on the Uploads module can be found at</xar:mlstring>
-            </p>
             <ul>
-                <li><xar:mlstring>Xarigami website at</xar:mlstring> <a title="#xarML('Uploads Module - Extension 666')#" href="http://xarigami.com/project/">Xarigami project pages</a>.
-                </li>
+                <li><xar:mlstring>Uploads project page</xar:mlstring> <xar:mlstring>(there is no project page yet)</xar:mlstring></li>
+                <li><a href="http://xarigami.org/contrails/displayproject/xup"><xar:mlstring>Xarigami Uploads issue tracker</xar:mlstring></a></li>
             </ul>
             <p class="xar-sub">
                 <strong>&nbsp;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.1&nbsp; 2009-08-25
