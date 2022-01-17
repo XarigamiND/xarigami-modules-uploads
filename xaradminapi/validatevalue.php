@@ -186,7 +186,7 @@ function uploads_adminapi_validatevalue($args)
         default:
 
             if (isset($value)) {
-                if (strlen($value) && $value{0} == ';') {
+                if (strlen($value) && $value[0] == ';') {
                     return array(true,$value);
                 } else {
                     return array(false,NULL);
