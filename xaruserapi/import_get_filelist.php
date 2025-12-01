@@ -164,7 +164,7 @@ function uploads_userapi_import_get_filelist( $args )
                                 $file = xarModAPIfunc('uploads', 'user', 'db_get_file',
                                                     array('fileLocation' => $fileName));
                                 if (count($file)) {
-                                    continue;
+                                    continue 2;
                                 }
                             }
 
